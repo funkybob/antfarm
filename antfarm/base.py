@@ -3,7 +3,7 @@
 import logging
 log = logging.getLogger(__name__)
 
-from .http import Request
+from .request import Request
 
 class App(object):
     '''
