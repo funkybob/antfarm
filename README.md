@@ -17,6 +17,6 @@ Philosophy
 
 A framework should protect you from two things:
 
-1) dangerous things
-2) tedious things
+1. dangerous things
+2. tedious things
 
