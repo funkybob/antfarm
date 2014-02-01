@@ -31,4 +31,6 @@ class App(object):
 
         start_response(response.get_status(), headers)
         # XXX Handle generator responses
-        return response.content.encode(response.content_encoding)
+        return [
+            response.content.encode(response.content_encoding)
+        ]
