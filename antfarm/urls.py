@@ -18,7 +18,7 @@ specified, they will default to {}.
 from collections import namedtuple
 
 import re
-import http
+from . import http
 
 class KeepLooking(Exception):
     '''Used to tell a url_dispatcher to skip this pattern and keep looking.'''

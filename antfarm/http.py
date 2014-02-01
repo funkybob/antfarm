@@ -1,15 +1,9 @@
 from __future__ import unicode_literals
 
-from Cookie import SimpleCookie, Morsel
+from http.cookies import SimpleCookie, Morsel
 import re
-try:
-    from urlparse import urlparse
-except ImportError:
-    from urllib.parse import urlparse
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
+from urllib.parse import urlparse
+from collections import OrderedDict
 
 
 STATUS_CODES = (

@@ -16,7 +16,7 @@ class Request(object):
 
         self.content_type, self.content_params = self.parse_content_type()
         self.cookies = self.parse_cookies()
-        self.QUERY_DATA = self.parse_query_data()
+        self.data = self.parse_query_data()
 
     def parse_cookies(self):
         cookies = self.environ.get('HTTP_COOKIE', '')
