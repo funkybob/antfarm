@@ -41,7 +41,7 @@ class Request(object):
             return parse_qs(self.environ['wsgi.input'].read(size))
 
     def parse_content_type(self):
-        content_type, _, params = self.environ['CONTENT_TYPE'].partition(';')
+        content_type, _, params = self.environ.get('CONTENT_TYPE', '').partition(';')
         content_params = {}
         for param in params.split(';'):
             k, _, v = param.strip().partition('=')
