@@ -42,9 +42,11 @@ class url_dispatcher(object):
         return pattern
 
     def __call__(self, request):
+        path = getattr(request, 'remaining_path', request.path)
         for pattern in self.patterns:
-            m = pattern.regex.match(request.path)
+            m = pattern.regex.match(path)
             if m:
+                path.remaining_path = path[:m.end()]
                 kwargs = dict(pattern.kwargs)
                 kwargs.update(pattern.kwargs)
                 try:
