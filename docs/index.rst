@@ -28,7 +28,7 @@ QuickStart
 
 
 Contents:
---------
+---------
 
 
 .. toctree::

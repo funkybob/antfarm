@@ -20,3 +20,6 @@ Included is a Django-esque URL dispatcher view.
 
     application = App(root_view=view)
 
+
+A view can raise a ``antfarm.urls.KeepLooking`` exception to tell the
+dispatcher to continue scanning.
