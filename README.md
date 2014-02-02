@@ -20,3 +20,9 @@ A framework should protect you from two things:
 1. dangerous things
 2. tedious things
 
+Requirements
+============
+
+- Python 3
+- A WSGI publisher (like gunicorn, uwsgi, Apache/mod_wsgi)
+
