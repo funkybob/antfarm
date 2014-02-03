@@ -40,8 +40,10 @@ Contents:
    :maxdepth: 2
 
    urls
+   utilities
    django
    example
+   cookbook
 
 
 Indices and tables
