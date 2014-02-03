@@ -2,6 +2,8 @@
 from http.cookies import SimpleCookie
 from urllib.parse import parse_qs
 
+from .utils.functional import buffered_property
+
 import logging
 log = logging.getLogger(__name__)
 
@@ -18,6 +20,14 @@ class Request(object):
         self.cookies = self.parse_cookies()
         self.data = self.parse_query_data()
 
+    @buffered_property
+    def query_data(self):
+        return parse_qs(
+            environ.get('QUERY_STRING', ''),
+            keep_blank_values=True
+        )
+        
+
     def parse_cookies(self):
         cookies = self.environ.get('HTTP_COOKIE', '')
         if cookies == '':
@@ -31,9 +41,7 @@ class Request(object):
             }
 
     def parse_query_data(self):
-        if self.method == 'GET':
-            return parse_qs(self.environ.get('QUERY_STRING', ''))
-        elif self.method == 'POST':
+        if self.method == 'POST':
             # Should test content type
             size = int(self.environ.get('CONTENT_LENGTH', 0))
             if not size:
