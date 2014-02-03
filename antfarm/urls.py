@@ -24,7 +24,7 @@ class KeepLooking(Exception):
     '''Used to tell a url_dispatcher to skip this pattern and keep looking.'''
     pass
 
-URL = namedtuple('url', ('regex', 'view', 'kwargs',))
+URL = namedtuple('url', ('regex', 'view'))
 
 class url_dispatcher(object):
     def __init__(self, patterns):
@@ -33,24 +33,20 @@ class url_dispatcher(object):
     def _make_url(self, pattern):
         '''Helper to ensure all patterns are url instances.'''
         if not isinstance(pattern, URL):
-            if len(pattern) == 2:
-                pattern = list(pattern) + [{}]
             pattern[0] = re.compile(pattern[0])
             pattern = URL(*pattern)
         # Ensure the regex is compiled
         pattern.regex = re.compile(pattern.regex)
         return pattern
 
-    def __call__(self, request):
+    def __call__(self, request, *args, **kwargs):
         path = getattr(request, 'remaining_path', request.path)
         for pattern in self.patterns:
             m = pattern.regex.match(path)
             if m:
                 path.remaining_path = path[:m.end()]
-                kwargs = dict(pattern.kwargs)
-                kwargs.update(pattern.kwargs)
                 try:
-                    return pattern.view(request, **kwargs)
+                    return pattern.view(request, *args, **kwargs)
                 except KeepLooking:
                     pass
 
