@@ -20,12 +20,17 @@ accepts a ``Request`` instance, and returns a ``Response``.
 QuickStart
 ----------
 
+Into test.py place:
+
 .. code-block:: python
 
     from antfarm import App, Response
 
     application = App(root_view = lambda r: Respone('Hello World!'))
 
+And launch:
+
+    gunicorn test:application
 
 Contents:
 ---------

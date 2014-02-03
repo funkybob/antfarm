@@ -23,4 +23,4 @@ URL Patterns
 
 There is a Django-style URL dispatcher view included in urls.py
 
-
+There is currently no support for named url patterns or reversing urls.
