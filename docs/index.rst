@@ -39,6 +39,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   api
    urls
    utilities
    django

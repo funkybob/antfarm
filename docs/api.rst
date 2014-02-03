@@ -1,0 +1,58 @@
+=============
+Major Classes
+=============
+
+The App class
+=============
+
+The root of Antfarm is the ``antfarm.Ant`` class.
+
+.. class:: App(root_view, \**kwargs)
+
+   .. attribute:: root_view
+
+      This provides the view to call to handle all requests.
+
+      Any extra kwargs will be stored as self.opts
+
+Each Antfarm application is an App instance.  Its configuration is passed to
+the constructor, and the instance is a callable conplying with the WSGI
+interface (PEP3333).
+
+Request
+=======
+
+The ``Request`` class encapsulates a request, as well as providing commonly
+needed parsing, such as cookies, querystrings, and body.
+
+
+.. class:: Request(environ)
+
+   .. attribute:: path
+
+      The requested URI
+
+   .. attribute:: method
+
+      The HTTP Verb used in this request (e.g. GET, POST, OPTIONS, etc)
+
+   .. attribute:: content_type
+
+      The supplied content type of this request.
+
+   .. attribute:: content_params
+
+      A dict containing any additional parameters passed in the content type
+      header.
+
+   .. attribute:: cookies
+
+      A dict of Cookies parsed from the request.
+
+   .. attribute:: query_data
+
+      A dict of data parsed from the query string.
+
+   .. attribute:: data
+
+      For POST only, the request body parsed 
