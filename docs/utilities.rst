@@ -64,7 +64,7 @@ In all other ways, this works as a normal class attribute.  Setting and del
 work as expected.
 
 By default, ``buffered_property`` will save the value to the name of the method
-it decorats.  If you want to provide a buffered interface to a method, but keep
+it decorators.  If you want to provide a buffered interface to a method, but keep
 the method, you will need to pass the name argument:
 
 .. code-block:: python
