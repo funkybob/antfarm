@@ -47,7 +47,7 @@ class Request(object):
     def body(self):
         size = int(self.environ.get('CONTENT_LENGTH', 0))
         if not size:
-            return {}
+            return ''
         return self.environ['wsgi.input'].read(size)
 
     @buffered_property
