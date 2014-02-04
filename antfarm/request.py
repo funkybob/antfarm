@@ -17,7 +17,6 @@ class Request(object):
         self.method = environ['REQUEST_METHOD']
 
         self.content_type, self.content_params = self.parse_content_type()
-        self.cookies = self.parse_cookies()
         self.data = self.parse_query_data()
 
     @buffered_property
@@ -26,19 +25,24 @@ class Request(object):
             environ.get('QUERY_STRING', ''),
             keep_blank_values=True
         )
-        
 
-    def parse_cookies(self):
-        cookies = self.environ.get('HTTP_COOKIE', '')
-        if cookies == '':
+    @buffered_property
+    def raw_cookies(self):
+        '''Raw access to cookies'''
+        cookie_data = self.environ.get('HTTP_COOKIE', '')
+        if not cookie_data:
             return {}
-        else:
-            c = SimpleCookie()
-            c.load(cookies)
-            return {
-                key: c.get(key).value
-                for key in c.keys()
-            }
+        cookies = SimpleCookie()
+        cookies.load(cookie_data)
+        return cookies
+
+    @buffered_property
+    def cookies(self):
+        '''Simplified Cookie access'''
+        return {
+            key: c.get(key).value
+            for key in c.keys()
+        }
 
     def parse_query_data(self):
         if self.method == 'POST':
