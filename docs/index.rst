@@ -40,6 +40,7 @@ Contents:
    :maxdepth: 2
 
    api
+   http
    urls
    utilities
    django

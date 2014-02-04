@@ -45,14 +45,34 @@ needed parsing, such as cookies, querystrings, and body.
       A dict containing any additional parameters passed in the content type
       header.
 
+   .. attribute:: raw_cookies
+
+      A SimpleCookie object.
+
    .. attribute:: cookies
 
-      A dict of Cookies parsed from the request.
+      A simpler interface to raw_cookies, which is a dict of simply keys and
+      values.
+
+   .. attribute:: body
+
+      The raw contents of the request body.
 
    .. attribute:: query_data
 
       A dict of data parsed from the query string.
 
-   .. attribute:: data
+   .. attribute:: request_data
 
-      For POST only, the request body parsed 
+      If the request content is a HTTP Form, returns the parsed data.
+
+
+The following attributes are lazy, and only parsed when accessed:
+
+- raw_cookies
+- cookies (reads raw_cookies)
+- query_data
+- body
+- request_data (reads body)
+
+
