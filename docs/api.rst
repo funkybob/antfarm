@@ -16,7 +16,7 @@ The root of Antfarm is the ``antfarm.Ant`` class.
       Any extra kwargs will be stored as self.opts
 
 Each Antfarm application is an App instance.  Its configuration is passed to
-the constructor, and the instance is a callable conplying with the WSGI
+the constructor, and the instance is a callable complying with the WSGI
 interface (PEP3333).
 
 Request

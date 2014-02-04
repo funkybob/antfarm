@@ -26,7 +26,7 @@ Into test.py place:
 
     from antfarm import App, Response
 
-    application = App(root_view = lambda r: Respone('Hello World!'))
+    application = App(root_view = lambda r: Response('Hello World!'))
 
 And launch:
 
