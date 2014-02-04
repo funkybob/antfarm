@@ -55,6 +55,7 @@ STATUS_CODES = (
     (505, 'HTTP Version Not Supported'),
 )
 
+
 class ResponseTypes(OrderedDict):
     def __init__(self, choices):
         super(ResponseTypes, self).__init__(choices)
@@ -62,6 +63,7 @@ class ResponseTypes(OrderedDict):
             setattr(self, re.sub(r'\W', '_', label.upper()), code)
 
 STATUS = ResponseTypes(STATUS_CODES)
+
 
 class Response(object):
     def __init__(self, content='', status=STATUS.OK, content_type='text/html',
@@ -93,19 +95,11 @@ class Response(object):
         return '%s %s' % (self.status, message)
 
 
-class BaseResponse(Response, Exception):
-    '''
-    A sub-class of Response that is also an Exception, allowing us to
-    raise/catch it.
-
-    With thanks to schinkel's repose.
-    '''
-
 #
 # Success Responses (2xx)
 #
 
-class ResponseSuccess(BaseResponse):
+class ResponseSuccess(Response):
     '''A base class for all 2xx responses, so we can issubclass test.'''
 
 class OK(ResponseSuccess):
@@ -130,7 +124,7 @@ class PartialContent(ResponseSuccess):
 # Redirection Responses (3xx)
 #
 
-class ResponseRedirection(BaseResponse):
+class ResponseRedirection(Response):
     '''A base class for all 3xx responses.'''
 
 class LocationHeaderMixin(object):
@@ -175,7 +169,7 @@ class PermanentRedirect(ResponseRedirection):
 # Client Error Responses (4xx)
 #
 
-class ResponseError(BaseResponse):
+class ResponseError(Response):
     '''A base class for all 4xx responses.'''
 
 class BadRequest(ResponseError):
@@ -241,7 +235,7 @@ class ExpectationFailed(ResponseError):
 # Server Error (5xx)
 #
 
-class ResponseServerError(BaseResponse):
+class ResponseServerError(Response):
     '''A base class for 5xx responses.'''
 
 class InternalServerError(ResponseServerError):
