@@ -17,14 +17,6 @@ class Request(object):
         self.method = environ['REQUEST_METHOD']
 
         self.content_type, self.content_params = self.parse_content_type()
-        self.data = self.parse_query_data()
-
-    @buffered_property
-    def query_data(self):
-        return parse_qs(
-            environ.get('QUERY_STRING', ''),
-            keep_blank_values=True
-        )
 
     @buffered_property
     def raw_cookies(self):
@@ -44,13 +36,25 @@ class Request(object):
             for key in c.keys()
         }
 
-    def parse_query_data(self):
-        if self.method == 'POST':
-            # Should test content type
-            size = int(self.environ.get('CONTENT_LENGTH', 0))
-            if not size:
-                return {}
-            return parse_qs(self.environ['wsgi.input'].read(size))
+    @buffered_property
+    def query_data(self):
+        return parse_qs(
+            environ.get('QUERY_STRING', ''),
+            keep_blank_values=True
+        )
+
+    @buffered_property
+    def body(self):
+        size = int(self.environ.get('CONTENT_LENGTH', 0))
+        if not size:
+            return {}
+        return self.environ['wsgi.input'].read(size)
+
+    @buffered_property
+    def request_data(self):
+        if self.content_type == 'application/x-www-form-urlencoded':
+            return parse_qs(self.body)
+        # Support multi-part
 
     def parse_content_type(self):
         content_type, _, params = self.environ.get('CONTENT_TYPE', '').partition(';')
