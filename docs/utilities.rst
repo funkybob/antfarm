@@ -54,7 +54,7 @@ Functional
 buffered_property
 -----------------
 
-This works much like Python's ``property`` build-in, except it will only call
+This works much like Python's ``property`` built-in, except it will only call
 the function once per instance, saving the result on the objects's \__dict__.
 
 In subsequent accesses to the property, Python will discover the value in

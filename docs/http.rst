@@ -50,7 +50,7 @@ Response
       used.  Otherwise, a Morsel is instanciated, and the key, value and kwargs
       passed to its set method.  Then it's added to the cookies container.
 
-   .. property:: status
+   .. attribute:: status
 
       A helper to return the status code and message as a single string.
 
