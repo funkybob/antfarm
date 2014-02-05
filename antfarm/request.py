@@ -12,16 +12,19 @@ DEFAULT_ENCODING = 'ISO-8859-1'
 class Request(object):
     def __init__(self, environ):
         self.environ = environ
-        # XXX Handle encoding
-        self.path = environ.get('PATH_INFO', '/')
-        self.method = environ['REQUEST_METHOD']
+        self.path = self.envstr('PATH_INFO', b'/')
+        self.method = self.envstr('REQUEST_METHOD')
 
         self.content_type, self.content_params = self.parse_content_type()
+
+    def envstr(self, key, default=b''):
+        '''Retrieve a string from the environ, decoded correctly.'''
+        return self.environ.get(key, default).decode(DEFAULT_ENCODING)
 
     @buffered_property
     def raw_cookies(self):
         '''Raw access to cookies'''
-        cookie_data = self.environ.get('HTTP_COOKIE', '')
+        cookie_data = self.envstr('HTTP_COOKIE')
         if not cookie_data:
             return {}
         cookies = SimpleCookie()
@@ -57,7 +60,8 @@ class Request(object):
         # Support multi-part
 
     def parse_content_type(self):
-        content_type, _, params = self.environ.get('CONTENT_TYPE', '').partition(';')
+        ctype = self.envstr('CONTENT_TYPE')
+        content_type, _, params = ctype.partition(';')
         content_params = {}
         for param in params.split(';'):
             k, _, v = param.strip().partition('=')
