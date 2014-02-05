@@ -29,7 +29,7 @@ For example:
 Response
 ========
 
-.. class:: Response(content='', status=STATUS.OK, content_type='text/html')
+.. class:: Response(content='', status_code=STATUS.OK, content_type='text/html')
 
    .. attribute:: content_encoding
    .. attribute:: status_message
@@ -50,9 +50,9 @@ Response
       used.  Otherwise, a Morsel is instanciated, and the key, value and kwargs
       passed to its set method.  Then it's added to the cookies container.
 
-   .. method:: get_status()
+   .. property:: status
 
-      Helper method to return the status code and message as a single string.
+      A helper to return the status code and message as a single string.
 
 Response sub-classes
 --------------------

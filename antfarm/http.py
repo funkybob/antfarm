@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 
 from http.cookies import SimpleCookie, Morsel
 import re
@@ -66,11 +65,11 @@ STATUS = ResponseTypes(STATUS_CODES)
 
 
 class Response(object):
-    def __init__(self, content='', status=STATUS.OK, content_type='text/html',
+    def __init__(self, content='', status_code=STATUS.OK, content_type='text/html',
             status_message=None, **kwargs):
         self.content = content
         self.content_encoding = kwargs.get('content_encoding', 'utf-8')
-        self.status = status
+        self.status_code = status_code
         self.status_message = status_message
         self.headers = {}
         self.headers['Content-Type'] = content_type
@@ -87,12 +86,13 @@ class Response(object):
         else:
             self.cookies[key] = value
 
-    def get_status(self):
+    @property
+    def status(self):
         '''Allow custom status messages'''
         message = self.status_message
         if message is None:
-            message = STATUS[self.status]
-        return '%s %s' % (self.status, message)
+            message = STATUS[self.status_code]
+        return '%s %s' % (self.status_code, message)
 
 
 #

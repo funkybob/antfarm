@@ -29,7 +29,7 @@ class App(object):
             for cookie in response.cookies.values()
         ]
 
-        start_response(response.get_status(), headers)
+        start_response(response.status, headers)
         # XXX Handle generator responses
         return [
             response.content.encode(response.content_encoding)
