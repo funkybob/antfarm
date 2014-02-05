@@ -1,4 +1,6 @@
 
+from functools import wraps
+
 class With(object):
     '''
     Decorator factory for wrapping a view with a context manager.
