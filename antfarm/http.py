@@ -54,14 +54,9 @@ STATUS_CODES = (
     (505, 'HTTP Version Not Supported'),
 )
 
-
-class ResponseTypes(OrderedDict):
-    def __init__(self, choices):
-        super(ResponseTypes, self).__init__(choices)
-        for code, label in choices:
-            setattr(self, re.sub(r'\W', '_', label.upper()), code)
-
-STATUS = ResponseTypes(STATUS_CODES)
+STATUS = OrderedDict(STATUS_CODES)
+for code, label in STATUS.items():
+    setattr(STATUS, re.sub(r'\W', '_', label.upper()), code)
 
 
 class Response(object):
