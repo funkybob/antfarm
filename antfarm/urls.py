@@ -50,7 +50,7 @@ class url_dispatcher(object):
                 except KeepLooking:
                     pass
 
-        self.handle_not_found(request)
+        return self.handle_not_found(request)
 
     def handle_not_found(self, request):
-        raise http.NotFound()
+        return http.NotFound()
