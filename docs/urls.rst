@@ -31,8 +31,8 @@ dispatcher to continue scanning.
 Nesting patterns
 ================
 
-The currently unmatched portion of the path is stashed on the Request object so
-``url_dispatcher`` views can be nested.
+The currently unmatched portion of the path is stashed on the Request object as
+``remaining_path``, so ``url_dispatcher`` views can be nested.
 
 .. code-block:: python
 
