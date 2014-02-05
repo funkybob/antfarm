@@ -32,14 +32,14 @@ class Request(object):
     def cookies(self):
         '''Simplified Cookie access'''
         return {
-            key: c.get(key).value
-            for key in c.keys()
+            key: self.raw_cookies[key].value
+            for key in self.raw_cookies.keys()
         }
 
     @buffered_property
     def query_data(self):
         return parse_qs(
-            environ.get('QUERY_STRING', ''),
+            self.environ.get('QUERY_STRING', ''),
             keep_blank_values=True
         )
 
