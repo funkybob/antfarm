@@ -60,10 +60,13 @@ for code, label in STATUS.items():
 
 
 class Response(object):
-    def __init__(self, content='', status_code=STATUS.OK, content_type='text/html',
+    default_status_code = STATUS.OK
+    def __init__(self, content='', status_code=None, content_type='text/html',
             status_message=None, **kwargs):
         self.content = content
         self.content_encoding = kwargs.get('content_encoding', 'utf-8')
+        if status_code is None:
+            status_code = self.default_status_code
         self.status_code = status_code
         self.status_message = status_message
         self.headers = {}
@@ -98,22 +101,22 @@ class ResponseSuccess(Response):
     '''A base class for all 2xx responses, so we can issubclass test.'''
 
 class OK(ResponseSuccess):
-    status_code = STATUS.OK
+    default_status_code = STATUS.OK
 
 class Created(ResponseSuccess):
-    status_code = STATUS.CREATED
+    default_status_code = STATUS.CREATED
 
 class Accepted(ResponseSuccess):
-    status_code = STATUS.ACCEPTED
+    default_status_code = STATUS.ACCEPTED
 
 class NoContent(ResponseSuccess):
-    status_code = STATUS.NO_CONTENT
+    default_status_code = STATUS.NO_CONTENT
 
 class ResetContent(ResponseSuccess):
-    status_code = STATUS.RESET_CONTENT
+    default_status_code = STATUS.RESET_CONTENT
 
 class PartialContent(ResponseSuccess):
-    status_code = STATUS.PARTIAL_CONTENT
+    default_status_code = STATUS.PARTIAL_CONTENT
 
 #
 # Redirection Responses (3xx)
@@ -137,28 +140,28 @@ class LocationHeaderMixin(object):
 
 
 class MultipleChoices(ResponseRedirection):
-    status_code = STATUS.MULTIPLE_CHOICES
+    default_status_code = STATUS.MULTIPLE_CHOICES
 
 class MovedPermanently(LocationHeaderMixin, ResponseRedirection):
-    status_code = STATUS.MOVED_PERMANENTLY
+    default_status_code = STATUS.MOVED_PERMANENTLY
 
 class Found(LocationHeaderMixin, ResponseRedirection):
-    status_code = STATUS.FOUND
+    default_status_code = STATUS.FOUND
 
 class SeeOther(LocationHeaderMixin, ResponseRedirection):
-    status_code = STATUS.SEE_OTHER
+    default_status_code = STATUS.SEE_OTHER
 
 class NotModified(ResponseRedirection):
-    status_code = STATUS.NOT_MODIFIED
+    default_status_code = STATUS.NOT_MODIFIED
 
 class UseProxy(LocationHeaderMixin, ResponseRedirection):
-    status_code = STATUS.USE_PROXY
+    default_status_code = STATUS.USE_PROXY
 
 class TemporaryRedirect(ResponseRedirection):
-    status_code = STATUS.TEMPORARY_REDIRECT
+    default_status_code = STATUS.TEMPORARY_REDIRECT
 
 class PermanentRedirect(ResponseRedirection):
-    status_code = STATUS.PERMANENT_REDIRECT
+    default_status_code = STATUS.PERMANENT_REDIRECT
 
 #
 # Client Error Responses (4xx)
@@ -168,63 +171,63 @@ class ResponseError(Response):
     '''A base class for all 4xx responses.'''
 
 class BadRequest(ResponseError):
-    status_code = STATUS.BAD_REQUEST
+    default_status_code = STATUS.BAD_REQUEST
 
 # XXX Auth-Realm ?
 class Unauthorized(ResponseError):
-    status_code = STATUS.UNAUTHORIZED
+    default_status_code = STATUS.UNAUTHORIZED
 
 class PaymentRequired(ResponseError):
-    status_code = STATUS.PAYMENT_REQUIRED
+    default_status_code = STATUS.PAYMENT_REQUIRED
 
 class Forbidden(ResponseError):
-    status_code = STATUS.FORBIDDEN
+    default_status_code = STATUS.FORBIDDEN
 
 class NotFound(ResponseError):
-    status_code = STATUS.NOT_FOUND
+    default_status_code = STATUS.NOT_FOUND
 
 class MethodNotAllowed(ResponseError):
     def __init__(self, permitted_methods, *args, **kwargs):
         super(MethodNotAllowed, self).__init__(*args, **kwargs)
         self['Allow'] = ', '.join(permitted_methods)
 
-    status_code = STATUS.METHOD_NOT_ALLOWED
+    default_status_code = STATUS.METHOD_NOT_ALLOWED
 
 class NotAcceptable(ResponseError):
-    status_code = STATUS.NOT_ACCEPTABLE
+    default_status_code = STATUS.NOT_ACCEPTABLE
 
 class ProxyAuthenticationRequired(ResponseError):
-    status_code = STATUS.PROXY_AUTHENTICATION_REQUIRED
+    default_status_code = STATUS.PROXY_AUTHENTICATION_REQUIRED
 
 class RequestTimeout(ResponseError):
-    status_code = STATUS.REQUEST_TIMEOUT
+    default_status_code = STATUS.REQUEST_TIMEOUT
 
 class Conflict(ResponseError):
-    status_code = STATUS.CONFLICT
+    default_status_code = STATUS.CONFLICT
 
 class Gone(ResponseError):
-    status_code = STATUS.GONE
+    default_status_code = STATUS.GONE
 
 class LengthRequired(ResponseError):
-    status_code = STATUS.LENGTH_REQUIRED
+    default_status_code = STATUS.LENGTH_REQUIRED
 
 class PreconditionFailed(ResponseError):
-    status_code = STATUS.PRECONDITION_FAILED
+    default_status_code = STATUS.PRECONDITION_FAILED
 
 class RequestEntityTooLarge(ResponseError):
-    status_code = STATUS.REQUEST_ENTITY_TOO_LARGE
+    default_status_code = STATUS.REQUEST_ENTITY_TOO_LARGE
 
 class RequestURITooLong(ResponseError):
-    status_code = STATUS.REQUEST_URI_TOO_LONG
+    default_status_code = STATUS.REQUEST_URI_TOO_LONG
 
 class UnsupportedMediaType(ResponseError):
-    status_code = STATUS.UNSUPPORTED_MEDIA_TYPE
+    default_status_code = STATUS.UNSUPPORTED_MEDIA_TYPE
 
 class RequestedRangeNotSatisfiable(ResponseError):
-    status_code = STATUS.REQUESTED_RANGE_NOT_SATISFIABLE
+    default_status_code = STATUS.REQUESTED_RANGE_NOT_SATISFIABLE
 
 class ExpectationFailed(ResponseError):
-    status_code = STATUS.EXPECTATION_FAILED
+    default_status_code = STATUS.EXPECTATION_FAILED
 
 #
 # Server Error (5xx)
@@ -234,19 +237,19 @@ class ResponseServerError(Response):
     '''A base class for 5xx responses.'''
 
 class InternalServerError(ResponseServerError):
-    status_code = STATUS.INTERNAL_SERVER_ERROR
+    default_status_code = STATUS.INTERNAL_SERVER_ERROR
 
 class NotImplemented(ResponseServerError):
-    status_code = STATUS.NOT_IMPLEMENTED
+    default_status_code = STATUS.NOT_IMPLEMENTED
 
 class BadGateway(ResponseServerError):
-    status_code = STATUS.BAD_GATEWAY
+    default_status_code = STATUS.BAD_GATEWAY
 
 class ServiceUnavailable(ResponseServerError):
-    status_code = STATUS.SERVICE_UNAVAILABLE
+    default_status_code = STATUS.SERVICE_UNAVAILABLE
 
 class GatewayTimeout(ResponseServerError):
-    status_code = STATUS.GATEWAY_TIMEOUT
+    default_status_code = STATUS.GATEWAY_TIMEOUT
 
 class HttpVersiontNotSupported(ResponseServerError):
-    status_code = STATUS.HTTP_VERSION_NOT_SUPPORTED
+    default_status_code = STATUS.HTTP_VERSION_NOT_SUPPORTED
