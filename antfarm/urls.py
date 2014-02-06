@@ -18,7 +18,7 @@ specified, they will default to {}.
 from collections import namedtuple
 
 import re
-from . import http
+from . import response
 
 class KeepLooking(Exception):
     '''Used to tell a url_dispatcher to skip this pattern and keep looking.'''
@@ -53,4 +53,4 @@ class url_dispatcher(object):
         return self.handle_not_found(request)
 
     def handle_not_found(self, request):
-        return http.NotFound()
+        return response.NotFound()
