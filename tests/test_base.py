@@ -5,7 +5,7 @@ from antfarm import App, Response
 from antfarm.http import STATUS
 
 BASE_ENV = {
-    'REQUEST_METHOD': b'GET',
+    'REQUEST_METHOD': 'GET',
 }
 
 class AppTest(TestCase):
