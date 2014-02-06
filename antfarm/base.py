@@ -24,13 +24,6 @@ class App(object):
 
         response = self.root_view(request)
 
-        headers = list(response.headers.items()) + [
-            ('Set-Cookie', cookie.OutputString())
-            for cookie in response.cookies.values()
-        ]
+        start_response(response.status, response.build_headers())
 
-        start_response(response.status, headers)
-        # XXX Handle generator responses
-        return [
-            response.content.encode(response.content_encoding)
-        ]
+        return response

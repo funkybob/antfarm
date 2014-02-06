@@ -4,6 +4,7 @@ import re
 from urllib.parse import urlparse
 from collections import OrderedDict
 
+DEFAULT_ENCODING = 'ISO-8859-1'
 
 STATUS_CODES = (
     (100, 'Continue'),
@@ -64,7 +65,7 @@ class Response(object):
     def __init__(self, content='', status_code=None, content_type='text/html',
             status_message=None, **kwargs):
         self.content = content
-        self.content_encoding = kwargs.get('content_encoding', 'utf-8')
+        self.content_encoding = kwargs.get('content_encoding', DEFAULT_ENCODING)
         if status_code is None:
             status_code = self.default_status_code
         self.status_code = status_code
@@ -72,6 +73,34 @@ class Response(object):
         self.headers = {}
         self.headers['Content-Type'] = content_type
         self.cookies = SimpleCookie()
+
+    def __iter__(self):
+        '''WSGI Iterates response content.'''
+        value = self.content
+        if not hasattr(value, '__iter__') or isinstance(value, (bytes, str)):
+            value = [value]
+
+        for chunk in value:
+            # Don't encode when already bytes or Content-Encoding set
+            yield chunk.encode(self.encoding)
+
+    def build_headers(self):
+        '''
+        Return the list of headers as two-tuples
+        '''
+        if not 'Content-Type' in self.headers:
+            content_type = self.content_type
+            if self.encoding != DEFAULT_ENCODING:
+                content_type += '; charset=%s' % self.encoding
+            self.headers['Content-Type'] = content_type
+
+        headers = list(self.headers.items())
+        # Append cookies
+        headers += [
+            ('Set-Cookie', cookie.OutputString())
+            for cookie in self.cookies.values()
+        ]
+        return headers
 
     def add_cookie(self, key, value, **attrs):
         '''
