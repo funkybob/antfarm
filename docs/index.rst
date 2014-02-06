@@ -39,8 +39,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   api
-   http
+   app
+   request
+   response
    urls
    utilities
    django
