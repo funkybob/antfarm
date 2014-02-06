@@ -7,24 +7,19 @@ from .utils.functional import buffered_property
 import logging
 log = logging.getLogger(__name__)
 
-DEFAULT_ENCODING = 'ISO-8859-1'
 
 class Request(object):
     def __init__(self, environ):
         self.environ = environ
-        self.path = self.envstr('PATH_INFO', b'/')
-        self.method = self.envstr('REQUEST_METHOD')
+        self.path = self.environ.get('PATH_INFO', b'/')
+        self.method = self.environ.get('REQUEST_METHOD')
 
         self.content_type, self.content_params = self.parse_content_type()
-
-    def envstr(self, key, default=b''):
-        '''Retrieve a string from the environ, decoded correctly.'''
-        return self.environ.get(key, default).decode(DEFAULT_ENCODING)
 
     @buffered_property
     def raw_cookies(self):
         '''Raw access to cookies'''
-        cookie_data = self.envstr('HTTP_COOKIE')
+        cookie_data = self.environ('HTTP_COOKIE', '')
         if not cookie_data:
             return {}
         cookies = SimpleCookie()
@@ -58,9 +53,23 @@ class Request(object):
         if self.content_type == 'application/x-www-form-urlencoded':
             return parse_qs(self.body)
         # Support multi-part
+        elif self.content_type == 'multipart/form-data':
+            print(self.body)
+            data = {}
+            # First, need the Boundary
+            boundary = '--' + self.content_params['boundary']
+            for line in self.body.split('\n'):
+                if line != boundary:
+                    if line == boundary + '--':
+                        break
+                    continue
+                # Parse headers to blank line, then content...
+                # Content-Disposition: form-data; name="..."
+                # Content-Disposition: attachment; name="..."
+                # Content-type: text/plain
 
     def parse_content_type(self):
-        ctype = self.envstr('CONTENT_TYPE')
+        ctype = self.environ.get('CONTENT_TYPE', '')
         content_type, _, params = ctype.partition(';')
         content_params = {}
         for param in params.split(';'):
