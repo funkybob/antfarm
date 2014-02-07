@@ -1,30 +1,8 @@
-===========
-HTTP Module
-===========
+========
+Response
+========
 
-This module include helpers for HTTP responses.
-
-STATUS_CODES
-============
-
-A tuple of two-tuples, each of (status code, status message)
-
-STATUS
-======
-
-An OrderedDict sub-class constructed from STATUS_CODES.
-
-Additionally, the status codes can be accessed by name.
-
-For example:
-
-.. code-block:: python
-
-    >>> STATUS.OK
-    200
-
-    >>> STATUS[200]
-    'OK'
+The response module includes the Response class, and a number of utilities.
 
 Response
 ========
@@ -58,4 +36,26 @@ Response sub-classes
 --------------------
 
 Additionally, there is a sub-class of Response for each HTTP Status code.
+
+STATUS_CODES
+============
+
+A tuple of two-tuples, each of (status code, status message)
+
+STATUS
+======
+
+An OrderedDict sub-class constructed from STATUS_CODES.
+
+Additionally, the status codes can be accessed by name.
+
+For example:
+
+.. code-block:: python
+
+    >>> STATUS.OK
+    200
+
+    >>> STATUS[200]
+    'OK'
 
