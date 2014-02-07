@@ -65,7 +65,7 @@ class Response(object):
     def __init__(self, content='', status_code=None, content_type='text/html',
             status_message=None, **kwargs):
         self.content = content
-        self.content_encoding = kwargs.get('content_encoding', DEFAULT_ENCODING)
+        self.encoding = kwargs.get('encoding', DEFAULT_ENCODING)
         if status_code is None:
             status_code = self.default_status_code
         self.status_code = status_code

@@ -31,7 +31,7 @@ Response
 
 .. class:: Response(content='', status_code=STATUS.OK, content_type='text/html')
 
-   .. attribute:: content_encoding
+   .. attribute:: encoding
    .. attribute:: status_message
 
    .. attribute:: headers
