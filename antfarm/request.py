@@ -1,7 +1,8 @@
 
-from http.cookies import SimpleCookie
-from urllib.parse import parse_qs
 from cgi import parse_multipart
+from http.cookies import SimpleCookie
+from StringIO import StringIO
+from urllib.parse import parse_qs
 
 from .utils.functional import buffered_property
 #from .utils import multipart
@@ -57,7 +58,7 @@ class Request(object):
             return parse_qs(self.body)
         # Support multi-part
         elif self.content_type == 'multipart/form-data':
-            return parse_multipart(self.body, self.content_params['boundary'])
+            return parse_multipart(StringIO(self.body), self.content_params['boundary'])
         return {}
 
     def parse_content_type(self):
