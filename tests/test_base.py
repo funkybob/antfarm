@@ -2,7 +2,7 @@
 from unittest import TestCase, main
 
 from antfarm import App, Response
-from antfarm.http import STATUS
+from antfarm.response import STATUS
 
 BASE_ENV = {
     'REQUEST_METHOD': 'GET',
