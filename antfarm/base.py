@@ -20,7 +20,7 @@ class App(object):
         self.opts = opts
 
     def __call__(self, environ, start_response):
-        request = Request(environ)
+        request = Request(self, environ)
 
         response = self.root_view(request)
 

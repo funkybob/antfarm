@@ -6,7 +6,7 @@ The ``Request`` class encapsulates a request, as well as providing commonly
 needed parsing, such as cookies, querystrings, and body.
 
 
-.. class:: Request(environ)
+.. class:: Request(app, environ)
 
    .. attribute:: path
 

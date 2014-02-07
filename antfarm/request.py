@@ -9,7 +9,8 @@ log = logging.getLogger(__name__)
 
 
 class Request(object):
-    def __init__(self, environ):
+    def __init__(self, app, environ):
+        self.app = app
         self.environ = environ
         self.path = self.environ.get('PATH_INFO', b'/')
         self.method = self.environ.get('REQUEST_METHOD')
