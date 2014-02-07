@@ -3,6 +3,7 @@ from http.cookies import SimpleCookie
 from urllib.parse import parse_qs
 
 from .utils.functional import buffered_property
+from .utils import multipart
 
 import logging
 log = logging.getLogger(__name__)
@@ -55,19 +56,8 @@ class Request(object):
             return parse_qs(self.body)
         # Support multi-part
         elif self.content_type == 'multipart/form-data':
-            print(self.body)
-            data = {}
-            # First, need the Boundary
-            boundary = '--' + self.content_params['boundary']
-            for line in self.body.split('\n'):
-                if line != boundary:
-                    if line == boundary + '--':
-                        break
-                    continue
-                # Parse headers to blank line, then content...
-                # Content-Disposition: form-data; name="..."
-                # Content-Disposition: attachment; name="..."
-                # Content-type: text/plain
+            return multipart.Parser(self.body, self.content_params['boundary']).parse()
+        return {}
 
     def parse_content_type(self):
         ctype = self.environ.get('CONTENT_TYPE', '')
