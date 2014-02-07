@@ -4,7 +4,7 @@ Classes to parse RFC 2388 mime/multipart content
 '''
 from collections import defaultdict
 
-class MultipartParser(
+class MultipartParser(object):
     def __init__(self, content, boundary):
         self.boundary = ('--' + boundary).encode('ascii')
         self.terminator = ('--' + boundary + '--').encode('ascii')
