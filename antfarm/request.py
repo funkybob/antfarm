@@ -1,5 +1,5 @@
 
-from cgi import parse_multipart
+import cgi
 from http.cookies import SimpleCookie
 from StringIO import StringIO
 from urllib.parse import parse_qs
@@ -18,7 +18,7 @@ class Request(object):
         self.path = self.environ.get('PATH_INFO', b'/')
         self.method = self.environ.get('REQUEST_METHOD')
 
-        self.content_type, self.content_params = self.parse_content_type()
+        self.content_type, self.content_params = cgi.parse_header(environ.get('CONTENT_TYPE', ''))
 
     @buffered_property
     def raw_cookies(self):
@@ -58,14 +58,8 @@ class Request(object):
             return parse_qs(self.body)
         # Support multi-part
         elif self.content_type == 'multipart/form-data':
-            return parse_multipart(StringIO(self.body), self.content_params['boundary'])
+            return cgi.parse_multipart(
+                StringIO(self.body),
+                self.content_params['boundary']
+            )
         return {}
-
-    def parse_content_type(self):
-        ctype = self.environ.get('CONTENT_TYPE', '')
-        content_type, _, params = ctype.partition(';')
-        content_params = {}
-        for param in params.split(';'):
-            k, _, v = param.strip().partition('=')
-            content_params[k] = v
-        return content_type, content_params
