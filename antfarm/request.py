@@ -22,10 +22,10 @@ class Request(object):
     @buffered_property
     def raw_cookies(self):
         '''Raw access to cookies'''
-        cookie_data = self.environ('HTTP_COOKIE', '')
-        if not cookie_data:
-            return {}
+        cookie_data = self.environ.get('HTTP_COOKIE', '')
         cookies = SimpleCookie()
+        if not cookie_data:
+            return cookies
         cookies.load(cookie_data)
         return cookies
 
