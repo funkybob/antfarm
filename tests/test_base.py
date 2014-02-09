@@ -19,7 +19,7 @@ class AppTest(TestCase):
 
         resp = app(BASE_ENV, start_response)
 
-        self.assertEqual(resp, [b'true'])
+        self.assertEqual(list(resp), [b'true'])
 
 if __name__ == '__main__':
     main()
