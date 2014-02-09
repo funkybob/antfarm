@@ -18,5 +18,11 @@ if __name__ == '__main__':
         len(result.skipped),
     ))
     if not result.wasSuccessful():
-        for module, traceback in result.errors:
-            print('[{}]\n{}\n\n'.format(module, traceback))
+        if result.errors:
+            print('\nErrors:')
+            for module, traceback in result.errors:
+                print('[{}]\n{}\n\n'.format(module, traceback))
+        if result.failures:
+            print('\nFailures:')
+            for module, traceback in result.failures:
+                print('[{}]\n{}\n\n'.format(module, traceback))
