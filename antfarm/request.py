@@ -1,7 +1,6 @@
 
 import cgi
 from http.cookies import SimpleCookie
-from io import StringIO
 from urllib.parse import parse_qs
 
 from .utils.functional import buffered_property
@@ -58,7 +57,7 @@ class Request(object):
         # Support multi-part
         elif self.content_type == 'multipart/form-data':
             return cgi.parse_multipart(
-                StringIO(self.body),
+                self.environ['wsgi.input'],
                 self.content_params['boundary']
             )
         return {}
