@@ -1,11 +1,10 @@
 
 import cgi
 from http.cookies import SimpleCookie
-from StringIO import StringIO
+from io import StringIO
 from urllib.parse import parse_qs
 
 from .utils.functional import buffered_property
-#from .utils import multipart
 
 import logging
 log = logging.getLogger(__name__)
