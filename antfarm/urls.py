@@ -33,8 +33,7 @@ class url_dispatcher(object):
         '''Helper to ensure all patterns are url instances.'''
         if not isinstance(pattern, URL):
             # Ensure the regex is compiled
-            pattern[0] = re.compile(pattern[0])
-            pattern = URL(*pattern)
+            pattern = URL(re.compile(pattern[0], pattern[1])
         return pattern
 
     def __call__(self, request, *args, **kwargs):
