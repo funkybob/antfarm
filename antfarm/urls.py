@@ -41,7 +41,7 @@ class url_dispatcher(object):
         for pattern in self.patterns:
             m = pattern.regex.match(path)
             if m:
-                path.remaining_path = path[:m.end()]
+                request.remaining_path = path[:m.end()]
                 try:
                     return pattern.view(request, *args, **kwargs)
                 except KeepLooking:
