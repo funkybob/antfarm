@@ -1,4 +1,3 @@
-
 '''
 Django-style URL dispatcher view.
 
@@ -33,10 +32,9 @@ class url_dispatcher(object):
     def _make_url(self, pattern):
         '''Helper to ensure all patterns are url instances.'''
         if not isinstance(pattern, URL):
+            # Ensure the regex is compiled
             pattern[0] = re.compile(pattern[0])
             pattern = URL(*pattern)
-        # Ensure the regex is compiled
-        pattern.regex = re.compile(pattern.regex)
         return pattern
 
     def __call__(self, request, *args, **kwargs):
