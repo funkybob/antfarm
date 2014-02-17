@@ -23,7 +23,14 @@ Included is a Django-esque URL dispatcher view.
 
 .. note::
 
-    Unlike Django, the initial / on the url is not automatically removed.
+   Unlike Django, the initial / on the url is not automatically removed. To get
+   a more django feel, you can include a pattern like this:
+
+   .. code-block:: python
+
+      root_url = urls.url_dispatcher(
+          (r'^/', root)
+      )
 
 A view can raise a ``antfarm.urls.KeepLooking`` exception to tell the
 dispatcher to continue scanning.
@@ -45,3 +52,14 @@ The currently unmatched portion of the path is stashed on the Request object as
         (r'^/inner/', inner_patterns),
     )
 
+Custominsing Not Found
+======================
+
+To control what response is given when no match is found for a pattern, you can
+sub-class url_dispatcher.  Override ``handle_not_found`` method.
+
+.. code-block:: python
+
+   class my_url_dispatcher(url_dispatcher):
+       def handle_not_found(self, request):
+           return http.NotFound("Could not find a page for %s" % request.path)

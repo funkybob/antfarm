@@ -31,10 +31,7 @@ class url_dispatcher(object):
 
     def _make_url(self, pattern):
         '''Helper to ensure all patterns are url instances.'''
-        if not isinstance(pattern, URL):
-            # Ensure the regex is compiled
-            pattern = URL(re.compile(pattern[0]), pattern[1])
-        return pattern
+        return URL(re.compile(pattern[0]), pattern[1])
 
     def __call__(self, request, *args, **kwargs):
         path = getattr(request, 'remaining_path', request.path)
