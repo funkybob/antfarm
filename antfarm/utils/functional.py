@@ -7,7 +7,7 @@ class buffered_property(object):
         self.getter = getter
 
     def __get__(self, instance, owner):
-        if instance is None:
+        if instance is None:  # pragma: no cover
             return self
         instance.__dict__[self.name] = value = self.getter(instance)
         return value
