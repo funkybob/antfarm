@@ -12,12 +12,12 @@ Included is a Django-esque URL dispatcher view.
 
     from myapp import views
 
-    view = urls.url_dispatcher([
+    view = urls.url_dispatcher(
         (r'^/$', views.index),
         (r'^/(?P<slug>[-\w]+)/$', views.blog_detail),
         (r'^/(?P<slug>[-\w]+)/up/$', partial(views.blog_vote, direction=1)),
         (r'^/(?P<slug>[-\w]+)/$', partial(views.blog_vote, direction=-1)),
-    ])
+    )
 
     application = App(root_view=view)
 
@@ -36,12 +36,12 @@ The currently unmatched portion of the path is stashed on the Request object as
 
 .. code-block:: python
 
-    inner_patterns = url_dispatcher([
+    inner_patterns = url_dispatcher(
         ...
-    ])
+    )
 
-    root_view = url_dispatcher([
+    root_view = url_dispatcher(
         ...
         (r'^/inner/', inner_patterns),
-    ])
+    )
 
