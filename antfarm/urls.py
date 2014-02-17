@@ -1,10 +1,10 @@
 '''
 Django-style URL dispatcher view.
 
-    App(root_url=url_dispatcher([
+    App(root_url=url_dispatcher(
         (r'^/$', views.index),
         (re.compile(r'^/(?P<foo>\d+)/'), views.detail, {'bar': True}),
-    ])
+    )
 
 The view will be called with the request, and any matched _named_ groups.
 Extra kwargs can be passed as a 3rd positional argument.
@@ -26,8 +26,8 @@ class KeepLooking(Exception):
 URL = namedtuple('url', ('regex', 'view'))
 
 class url_dispatcher(object):
-    def __init__(self, patterns):
-        self.patterns = map(self._make_url, patterns)
+    def __init__(self, *patterns):
+        self.patterns = [self._make_url(pattern) for pattern in  patterns]
 
     def _make_url(self, pattern):
         '''Helper to ensure all patterns are url instances.'''
