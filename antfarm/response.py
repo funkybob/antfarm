@@ -82,7 +82,9 @@ class Response(object):
 
         for chunk in value:
             # Don't encode when already bytes or Content-Encoding set
-            yield chunk.encode(self.encoding)
+            if not isinstance(chunk, bytes):
+                chunk = chunk.encode(self.encoding)
+            yield chunk
 
     def build_headers(self):
         '''
