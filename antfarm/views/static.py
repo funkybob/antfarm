@@ -3,7 +3,7 @@
 Helper for serving static content.
 
 '''
-from antfarm import http
+from antfarm import response
 import mimetypes
 
 class ServeStatic(object):
@@ -13,12 +13,12 @@ class ServeStatic(object):
     def __call__(self, path):
         full_path = os.path.absdir(os.path.join(self.root, path))
         if not full_path.startswith(self.root):
-            return http.NotFound()
+            return response.NotFound()
 
         # Guess content type
         content_type, encoding = mimetypes.guess_type(full_path)
         content_type = content_type or 'application/octet-stream'
 
-        return http.Response(iter(open(full_path, 'rb')),
+        return response.Response(iter(open(full_path, 'rb')),
             content_type=content_type
         )
