@@ -39,6 +39,7 @@ class url_dispatcher(object):
             m = pattern.regex.match(path)
             if m:
                 request.remaining_path = path[m.end():]
+                kwargs.update(m.groupdict())
                 try:
                     return pattern.view(request, *args, **kwargs)
                 except KeepLooking:
