@@ -26,8 +26,10 @@ class KeepLooking(Exception):
 URL = namedtuple('url', ('regex', 'view'))
 
 class url_dispatcher(object):
+    __slots__ = ('patterns',)
+
     def __init__(self, *patterns):
-        self.patterns = [self._make_url(pattern) for pattern in  patterns]
+        self.patterns = tuple(self._make_url(pattern) for pattern in patterns)
 
     def _make_url(self, pattern):
         '''Helper to ensure all patterns are url instances.'''
