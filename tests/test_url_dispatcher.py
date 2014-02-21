@@ -3,7 +3,7 @@ from unittest import TestCase, main
 
 from antfarm.request import Request
 from antfarm.response import (Response, NotFound, ResponseError, Created,
-                              OK, Accepted)
+                              OK, Accepted, BadRequest)
 from antfarm.urls import url_dispatcher, URL, KeepLooking
 
 
@@ -15,6 +15,11 @@ def test_view(request, slug=None, direction=None):
     if slug is not None:
         return Accepted(str(slug))
     return OK('OK')
+
+
+class custom_url_dispatcher(url_dispatcher):
+    def handle_not_found(self, request):
+        return BadRequest()
 
 
 class UrlDispatcherTest(TestCase):
@@ -78,6 +83,22 @@ class UrlDispatcherTest(TestCase):
         self.assertEqual(applied.status_code, 202)
         self.assertIsInstance(applied, Accepted)
         self.assertEqual(applied.content, 'down')
+
+
+class CustomUrlDispatcherTest(UrlDispatcherTest):
+    def setUp(self):
+        super(CustomUrlDispatcherTest, self).setUp()
+        self.instance = custom_url_dispatcher(*self.patterns)
+
+    def test_002_not_found(self):
+        req = Request(None, self.environ)
+        req.path = '/abc/def/'
+        applied = self.instance(req)
+        self.assertEqual(applied.status_code, 400)
+        # check for ResponseError because it is the separating point between
+        # Response and NotFound
+        self.assertIsInstance(applied, ResponseError)
+        self.assertIsInstance(applied, BadRequest)
 
 
 if __name__ == '__main__':
