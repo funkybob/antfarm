@@ -220,7 +220,7 @@ class NotFound(ResponseError):
 class MethodNotAllowed(ResponseError):
     def __init__(self, permitted_methods, *args, **kwargs):
         super(MethodNotAllowed, self).__init__(*args, **kwargs)
-        self['Allow'] = ', '.join(permitted_methods)
+        self.headers['Allow'] = ', '.join(permitted_methods)
 
     default_status_code = STATUS.METHOD_NOT_ALLOWED
 
