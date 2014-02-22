@@ -67,6 +67,10 @@ class RequestTest(TestCase):
         self.assertEqual(req.request_data,
                          {'a': ['1', '4'], 'b': ['2'], 'c': ['3']})
 
+    def test_008_not_multipart_not_urlencoded(self):
+        req = request.Request(None, dict(BASE_ENVIRON,
+                              CONTENT_TYPE='application/json'))
+        self.assertEqual(req.request_data, {})
 
 if __name__ == '__main__':
     main()
