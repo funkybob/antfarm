@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from antfarm.response import MethodNotAllowed, MovedPermanently
+from antfarm.response import MethodNotAllowed, MovedPermanently, Response
 
 
 class ResponseTest(TestCase):
@@ -20,6 +20,23 @@ class ResponseTest(TestCase):
         with self.assertRaises(ValueError):
             MovedPermanently(location='ftp://example.com/')
 
+    def test_004_status_code_fallback(self):
+        response = Response()
+        self.assertIsNotNone(response.status_code)
+        self.assertEqual(response.status_code, 200)
+
+    def test_005_status_code_given(self):
+        # no validation is currently done on the status code.
+        response = Response(status_code=999)
+        self.assertIsNotNone(response.status_code)
+        self.assertEqual(response.status_code, 999)
+
+    def test_006_custom_status(self):
+        response = Response(status_code=999,
+                            status_message="call the emergency services")
+        self.assertEqual(response.status, '999 call the emergency services')
+        self.assertEqual(response.status_code, 999)
+        self.assertEqual(response.status_message, "call the emergency services")
 
 if __name__ == '__main__':
     main()
