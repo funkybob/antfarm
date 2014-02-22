@@ -38,5 +38,12 @@ class ResponseTest(TestCase):
         self.assertEqual(response.status_code, 999)
         self.assertEqual(response.status_message, "call the emergency services")
 
+    def test_007_add_cookie(self):
+        response = Response()
+        self.assertEqual(len(response.cookies), 0)
+        response.add_cookie(key='test', value='a test!')
+        self.assertEqual(len(response.cookies), 1)
+
+
 if __name__ == '__main__':
     main()
