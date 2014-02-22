@@ -158,6 +158,8 @@ class ResponseRedirection(Response):
 
 class LocationHeaderMixin(object):
     '''Many 3xx responses require a Location header'''
+    allowed_schemes = ('http', 'https')
+
     def __init__(self, location, *args, **kwargs):
         super(LocationHeaderMixin, self).__init__(*args, **kwargs)
         parsed = urlparse(location)
@@ -165,9 +167,9 @@ class LocationHeaderMixin(object):
             raise ValueError(
                 "Unsafe redirect to URL with protocol '%s'" % parsed.scheme
             )
-        self['Location'] = location # Probably need escaping?
+        self.headers['Location'] = location # Probably need escaping?
 
-    url = property(lambda self: self['Location'])
+    url = property(lambda self: self.headers['Location'])
 
 
 class MultipleChoices(ResponseRedirection):
