@@ -47,6 +47,7 @@ Contents:
    django
    example
    cookbook
+   testing
 
 
 Indices and tables

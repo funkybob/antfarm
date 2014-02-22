@@ -1,0 +1,14 @@
+[run]
+source = antfarm
+branch = True
+data_file = .coverage
+timid = False
+
+[report]
+exclude_lines =
+    pragma: no cover
+precision = 1
+show_missing = True
+
+[html]
+title = antfarm coverage
