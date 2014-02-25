@@ -15,8 +15,9 @@ specified, they will default to {}.
 '''
 
 from collections import namedtuple
-
+from functools import partial
 import re
+
 from . import response
 
 class KeepLooking(Exception):
@@ -29,7 +30,7 @@ class url_dispatcher(object):
     __slots__ = ('patterns',)
 
     def __init__(self, *patterns):
-        self.patterns = tuple(self._make_url(pattern) for pattern in patterns)
+        self.patterns = [self._make_url(pattern) for pattern in patterns]
 
     def _make_url(self, pattern):
         '''Helper to ensure all patterns are url instances.'''
@@ -51,3 +52,10 @@ class url_dispatcher(object):
 
     def handle_not_found(self, request):
         return response.NotFound()
+
+    def register(self, pattern, view=None):
+        '''Allow decorator-style construction of URL pattern lists.'''
+        if view is None:
+            return partial(self.register, pattern)
+        self.patterns.append(self._make_url((pattern, view)))
+        return view
