@@ -35,6 +35,27 @@ Included is a Django-esque URL dispatcher view.
 A view can raise a ``antfarm.urls.KeepLooking`` exception to tell the
 dispatcher to continue scanning.
 
+urls_dispather.register
+-----------------------
+
+You can dynamically add patterns to a urls_dispatcher by calling the instances
+``register`` method:
+
+.. code-block:: python
+
+   urls = url_dispatcher(....)
+
+   urls.register(pattern, view)
+
+Additionally, you can decorate your views to add them to the url_dispatcher.
+
+.. code-block:: python
+
+   urls = url_dispatcher()
+
+   @urls.register(pattern)
+   def view(request...):
+
 Nesting patterns
 ================
 
