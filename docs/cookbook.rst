@@ -19,15 +19,15 @@ A simple example is making some URLs password protected, but not others.
 
 .. code-block:: python
 
-    private_urls = url_dispatcher([
+    private_urls = url_dispatcher(
         (r'^$', views.user_list),
         (r'^(?P<user_id>\d+)/$', views.user_detail),
-    ])
+    )
 
-    root_urls = url_dispatcher([
+    root_urls = url_dispatcher(
         (r'^/$', views.index),
         (r'^/login/$', views.login),
         (r'^/users/', With(login_required)(private_urls)),
-    ])
+    )
 
 

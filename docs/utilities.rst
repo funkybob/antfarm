@@ -21,9 +21,9 @@ Or, in a url_dispatcher:
 
 .. code-block:: python
 
-    urls = url_dispatcher([
+    urls = url_dispatcher(
         (r'^/user/$', With(session_manager)(user_detail)),
-    ])
+    )
 
 Internally the wrapping function will be called passed the request, and any
 positional or keyword arguments passed to the constructor.  It is expected to
@@ -42,9 +42,9 @@ also:
 .. code-block:: python
 
     App(
-        root_view = With(session_manager)(url_dispatcher([
+        root_view = With(session_manager)(url_dispatcher(
             ...
-        ]))
+        ))
     )
 
 
