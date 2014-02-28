@@ -37,9 +37,9 @@ Simple URL routing
         return antfarm.Response('You asked for %s' % user_pk)
 
     application = antfarm.App(
-        root_view = url_dispatcher([
+        root_view = url_dispatcher(
             (r'^/$', index),
             (r'^/details/(?P<user_pk>\d+)/$', detail),
-        ])
+        )
     )
 
