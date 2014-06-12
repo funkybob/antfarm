@@ -18,7 +18,7 @@ from collections import namedtuple
 from functools import partial
 import re
 
-from . import response
+from antfarm import response
 
 class KeepLooking(Exception):
     '''Used to tell a url_dispatcher to skip this pattern and keep looking.'''
