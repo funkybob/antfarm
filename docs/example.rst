@@ -28,7 +28,7 @@ Simple URL routing
 .. code-block:: python
 
     import antfarm
-    from antfarm.urls import URL, url_dispatcher
+    from antfarm.views.urls import url_dispatcher
 
     def index(request):
         return antfarm.Response('Index')

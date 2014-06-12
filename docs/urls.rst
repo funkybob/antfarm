@@ -8,7 +8,7 @@ Included is a Django-esque URL dispatcher view.
 
     from functools import partial
 
-    from antfarm import urls
+    from antfarm.views import urls
 
     from myapp import views
 

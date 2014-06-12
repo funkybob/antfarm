@@ -21,6 +21,6 @@ middleware, as you can wrap only the views or dispatcher paths you choose.
 URL Patterns
 ============
 
-There is a Django-style URL dispatcher view included in urls.py
+There is a Django-style URL dispatcher view included in views/urls.py
 
 There is currently no support for named url patterns or reversing urls.
