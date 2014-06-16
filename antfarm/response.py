@@ -123,6 +123,14 @@ class Response(object):
             message = STATUS[self.status_code]
         return '%s %s' % (self.status_code, message)
 
+    def close(self):
+        '''Close our content if it can be.
+
+        WSGI must call close if the response object has one.
+        '''
+        if callable(getattr(self.content, 'read', None)):
+            self.content.close()
+
 
 #
 # Success Responses (2xx)
