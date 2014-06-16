@@ -32,6 +32,14 @@ Response
 
       A helper to return the status code and message as a single string.
 
+   .. method:: close()
+
+      Attempts to close self.content if it has a callable close attribute.
+
+      The WSGI spec requires it to call the close methon on response objects 
+      which have one.  This method allows, for instance, passing a file as
+      ``content`` and being sure it is closed.
+
 Response sub-classes
 --------------------
 
