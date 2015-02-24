@@ -16,8 +16,8 @@ class App(object):
     You can also sub-class this to provide the root_view.
     '''
     def __init__(self, **opts):
-        self.root_view = opts['root_view']
-        self.opts = opts
+        for key, val in opts.items():
+            setattr(self, key, val)
 
     def __call__(self, environ, start_response):
         request = Request(self, environ)
