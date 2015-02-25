@@ -73,8 +73,8 @@ The currently unmatched portion of the path is stashed on the Request object as
         (r'^/inner/', inner_patterns),
     )
 
-Custominsing Not Found
-======================
+Customising Not Found
+=====================
 
 To control what response is given when no match is found for a pattern, you can
 sub-class url_dispatcher.  Override ``handle_not_found`` method.

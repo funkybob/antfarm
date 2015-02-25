@@ -31,7 +31,7 @@ needed parsing, such as cookies, querystrings, and body.
 
    .. attribute:: cookies
 
-      A simpler interface to raw_cookies, which is a dict of simply keys and
+      A simpler interface to raw_cookies, which is a dict of cookie names to
       values.
 
    .. attribute:: body
@@ -54,5 +54,3 @@ The following attributes are lazy, and only parsed when accessed:
 - query_data
 - body
 - request_data (reads body)
-
-

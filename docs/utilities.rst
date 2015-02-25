@@ -12,7 +12,7 @@ This works much like Python's ``property`` built-in, except it will only call
 the function once per instance, saving the result on the objects's \__dict__.
 
 In subsequent accesses to the property, Python will discover the value in
-\__dict__ first, and skip calling the property's __get__.
+\__dict__ first, and skip calling the property's \__get__.
 
 In all other ways, this works as a normal class attribute.  Setting and del
 work as expected.
