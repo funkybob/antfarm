@@ -4,7 +4,7 @@ from unittest import TestCase, main
 from antfarm.request import Request
 from antfarm.response import (Response, NotFound, ResponseError, Created,
                               OK, Accepted, BadRequest)
-from antfarm.urls import url_dispatcher, URL, KeepLooking
+from antfarm.views.urls import url_dispatcher, URL, KeepLooking
 
 
 def test_view(request, slug=None, direction=None):
