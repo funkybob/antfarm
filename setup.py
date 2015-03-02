@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='antfarm',
-    version='0.0.2',
+    version='0.0.3',
     description='An ultra-light-weight web framework',
     author='Curtis Maloney',
     author_email='curtis@tinbrain.net',
